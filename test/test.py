@@ -3,7 +3,7 @@
 
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import ClockCycles
+from cocotb.triggers import ClockCycles, FallingEdge
 
 
 @cocotb.test()
@@ -20,7 +20,7 @@ async def test_project(dut):
     dut.ui_in.value = 0
     dut.uio_in.value = 0
     dut.rst_n.value = 0
-    await ClockCycles(dut.clk, 10)
+    await ClockCycles(dut.clk, 9)
     dut.rst_n.value = 1
 
     dut._log.info("Test project behavior")
@@ -31,59 +31,60 @@ async def test_project(dut):
 
     #   send input
     #   row 0
+    await ClockCycles(dut.clk, 1, rising=False)
     dut.ui_in.value = 2     #   mat3x3_0
     dut.uio_in.value = 3    #   mat3x3_1
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     dut.ui_in.value = 7
     dut.uio_in.value = 0
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     dut.ui_in.value = 3
     dut.uio_in.value = 1
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     #   row 1
     dut.ui_in.value = 1
     dut.uio_in.value = 2
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     dut.ui_in.value = 5
     dut.uio_in.value = 1
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     dut.ui_in.value = 8
     dut.uio_in.value = 0
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     #   row 2
     dut.ui_in.value = 0
     dut.uio_in.value = 1
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     dut.ui_in.value = 4 #
     dut.uio_in.value = 2
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     dut.ui_in.value = 1
     dut.uio_in.value = 4
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
 
     #   read outputs
     #   row 0
-    await ClockCycles(dut.clk, 3)
+    await ClockCycles(dut.clk, 1, rising=False)
     assert dut.uo_out.value == 23
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     assert dut.uo_out.value == 13
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     assert dut.uo_out.value == 14
     #   row 1
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     assert dut.uo_out.value == 21
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     assert dut.uo_out.value == 21
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     assert dut.uo_out.value == 33
     #   row 2
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     assert dut.uo_out.value == 9
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     assert dut.uo_out.value == 6
-    await ClockCycles(dut.clk, 1)
+    await ClockCycles(dut.clk, 1, rising=False)
     assert dut.uo_out.value == 4
-    await ClockCycles(dut.clk, 10)
+    await ClockCycles(dut.clk, 10, rising=False)
     # The following assersion is just an example of how to check the output values.
     # Change it to match the actual expected output of your module:
     #assert dut.uo_out.value == 50
