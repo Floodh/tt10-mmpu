@@ -29,6 +29,7 @@ begin
     uio_oe  <= "00000000";
 
     process(clk, rst_n)
+        variable result : std_logic_vector(15 downto 0) := 0; 
     begin
 
         if rst_n = '0' then
@@ -52,11 +53,13 @@ begin
                 --mat3x3_0(7  downto 0) <= mat3x3_0(71 downto 64);
                 --mat3x3_1(7  downto 0) <= mat3x3_1(71 downto 64);  
                 
-                uo_out <= std_logic_vector(
+                result :=     std_logic_vector(       
                     mat3x3_0( 7 downto  0) * mat3x3_1( 7 downto   0) +
                     mat3x3_0(15 downto  8) * mat3x3_1(31 downto  24) +
                     mat3x3_0(23 downto 16) * mat3x3_1(55 downto  48)
                 );
+
+                uo_out <= result(7 downto 0);
                 
                 --  colum shift left every clock cycle
                 --  row 0
