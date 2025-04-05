@@ -26,7 +26,7 @@ begin
 
     --uo_out <= std_logic_vector(unsigned(ui_in) + unsigned(uio_in));
     uio_out <= "00000000";
-    uio_oe <= "00000000";
+    uio_oe  <= "00000000";
 
     process(clk, rst_n)
     begin
@@ -41,8 +41,8 @@ begin
             if driver_count < 10 then
                
                 --  inputs
-                mat3x3_0(7  downto 0)  <= ui_in(7 downto 0);
-                mat3x3_1(7  downto 0)  <= uio_in(7 downto 0);
+                mat3x3_0(7  downto 0)  <= unsigned(ui_in(7 downto 0));
+                mat3x3_1(7  downto 0)  <= unsigned(uio_in(7 downto 0));
                 --  rotations
                 mat3x3_0(71 downto 8) <= mat3x3_0(63 downto  0);
                 mat3x3_1(71 downto 8) <= mat3x3_1(63 downto  0);                
@@ -52,11 +52,11 @@ begin
                 --mat3x3_0(7  downto 0) <= mat3x3_0(71 downto 64);
                 --mat3x3_1(7  downto 0) <= mat3x3_1(71 downto 64);  
                 
-                uo_out <= 
+                uo_out <= std_logic_vector(
                     mat3x3_0( 7 downto  0) * mat3x3_1( 7 downto   0) +
                     mat3x3_0(15 downto  8) * mat3x3_1(31 downto  24) +
                     mat3x3_0(23 downto 16) * mat3x3_1(55 downto  48)
-                ;
+                );
                 
                 --  colum shift left every clock cycle
                 --  row 0
