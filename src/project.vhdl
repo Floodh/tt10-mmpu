@@ -29,7 +29,7 @@ begin
     uio_oe  <= "00000000";
 
     process(clk, rst_n)
-        variable result : std_logic_vector(15 downto 0); 
+        variable result : std_logic_vector(13 downto 0); 
     begin
 
         if rst_n = '0' then
