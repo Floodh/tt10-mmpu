@@ -17,8 +17,8 @@ end tt_um_mmpu;
 
 architecture Behavioral of tt_um_mmpu is
 
-    signal mat3x3_0     :   unsigned(71 downto 0) := (others => '0');
-    signal mat3x3_1     :   unsigned(71 downto 0) := (others => '0');
+    signal mat3x3_0     :   unsigned(62 downto 0) := (others => '0');
+    signal mat3x3_1     :   unsigned(62 downto 0) := (others => '0');
     signal driver_count :   unsigned( 4 downto 0) := (others => '0');
     signal shift_count  :   unsigned( 1 downto 0) := (others => '0');
 
@@ -42,48 +42,48 @@ begin
             if driver_count < 10 then
                
                 --  inputs
-                mat3x3_0(71  downto 64)  <= unsigned(ui_in(7 downto 0));
-                mat3x3_1(71  downto 64)  <= unsigned(uio_in(7 downto 0));
+                mat3x3_0(62 downto 56)  <= unsigned(ui_in(7 downto 0));
+                mat3x3_1(62 downto 56)  <= unsigned(uio_in(7 downto 0));
                 --  rotations           
-                mat3x3_0(63 downto 0) <= mat3x3_0(71 downto 8);
-                mat3x3_1(63 downto 0) <= mat3x3_1(71 downto 8);   
+                mat3x3_0(55 downto 0) <= mat3x3_0(62 downto 7);
+                mat3x3_1(55 downto 0) <= mat3x3_1(62 downto 7);   
 
             else    --  0000 1001,  0000 1010,  0000 1011, 0000 1100
        
                 result :=     std_logic_vector(       
-                    mat3x3_0( 7 downto  0) * mat3x3_1( 7 downto   0) +
-                    mat3x3_0(15 downto  8) * mat3x3_1(31 downto  24) +
-                    mat3x3_0(23 downto 16) * mat3x3_1(55 downto  48)
+                    mat3x3_0( 6 downto  0) * mat3x3_1( 6 downto  0) +
+                    mat3x3_0(13 downto  7) * mat3x3_1(27 downto 21) +
+                    mat3x3_0(20 downto 14) * mat3x3_1(48 downto 42)
                 );
 
                 uo_out <= result(7 downto 0);
                 
                 --  colum shift left every clock cycle
                 --  row 0
-                mat3x3_1(15 downto  0) <= mat3x3_1(23 downto 8);
-                mat3x3_1(23 downto 16) <= mat3x3_1( 7 downto 0);
+                mat3x3_1(13 downto  0) <= mat3x3_1(20 downto 7);
+                mat3x3_1(20 downto 14) <= mat3x3_1( 6 downto 0);
                 --  row 1
-                mat3x3_1(39 downto 24) <= mat3x3_1(47 downto 32);
-                mat3x3_1(47 downto 40) <= mat3x3_1(31 downto 24);
+                mat3x3_1(34 downto 21) <= mat3x3_1(41 downto 28);
+                mat3x3_1(41 downto 35) <= mat3x3_1(27 downto 21);
                 --  row 2
-                mat3x3_1(63 downto 48) <= mat3x3_1(71 downto 56);
-                mat3x3_1(71 downto 64) <= mat3x3_1(55 downto 48);
+                mat3x3_1(55 downto 42) <= mat3x3_1(62 downto 49);
+                mat3x3_1(62 downto 56) <= mat3x3_1(48 downto 42);
 
                 shift_count <= shift_count + 1;
-                if shift_count(1 downto 0) = "10" then
+                if shift_count(1) = '1' then
                     --  row shift up every fourth clock cycle
                     --  colum 0
-                    mat3x3_0( 7 downto  0) <= mat3x3_0(31 downto 24);
-                    mat3x3_0(31 downto 24) <= mat3x3_0(55 downto 48);  
-                    mat3x3_0(55 downto 48) <= mat3x3_0( 7 downto 0);                   
+                    mat3x3_0( 6 downto  0) <= mat3x3_0(27 downto 21);
+                    mat3x3_0(27 downto 21) <= mat3x3_0(48 downto 42);  
+                    mat3x3_0(48 downto 42) <= mat3x3_0( 6 downto  0);                   
                     --  colum 1
-                    mat3x3_0(15 downto  8) <= mat3x3_0(39 downto 32);
-                    mat3x3_0(39 downto 32) <= mat3x3_0(63 downto 56);  
-                    mat3x3_0(63 downto 56) <= mat3x3_0(15 downto  8);
+                    mat3x3_0(13 downto  7) <= mat3x3_0(34 downto 28);
+                    mat3x3_0(34 downto 28) <= mat3x3_0(55 downto 49);  
+                    mat3x3_0(55 downto 49) <= mat3x3_0(13 downto  7);
                     --  colum 1
-                    mat3x3_0(23 downto 16) <= mat3x3_0(47 downto 40);
-                    mat3x3_0(47 downto 40) <= mat3x3_0(71 downto 64);  
-                    mat3x3_0(71 downto 64) <= mat3x3_0(23 downto 16);
+                    mat3x3_0(20 downto 14) <= mat3x3_0(41 downto 35);
+                    mat3x3_0(41 downto 35) <= mat3x3_0(62 downto 56);  
+                    mat3x3_0(62 downto 56) <= mat3x3_0(20 downto 14);
                     shift_count <= "00";
                 end if;
 
