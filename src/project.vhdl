@@ -32,6 +32,7 @@ begin
             mat3x3_0        <=  (others => '0');
             mat3x3_1        <=  (others => '0');
             driver_count    <=  (others => '0');
+            uo_out          <=  (others => '0');
         elsif rising_edge(clk) then
             
             driver_count <= driver_count + 1;
