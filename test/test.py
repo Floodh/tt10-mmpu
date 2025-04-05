@@ -14,13 +14,14 @@ async def test_project(dut):
     clock = Clock(dut.clk, 10, units="us")
     cocotb.start_soon(clock.start())
 
+
     # Reset
     dut._log.info("Reset")
     dut.ena.value = 1
     dut.ui_in.value = 0
     dut.uio_in.value = 0
     dut.rst_n.value = 0
-    await ClockCycles(dut.clk, 9)
+    await ClockCycles(dut.clk, 9, rising=False)
     dut.rst_n.value = 1
 
     dut._log.info("Test project behavior")
