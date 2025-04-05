@@ -42,8 +42,8 @@ begin
             if driver_count < 10 then
                
                 --  inputs
-                mat3x3_0(62 downto 56)  <= unsigned(ui_in(7 downto 0));
-                mat3x3_1(62 downto 56)  <= unsigned(uio_in(7 downto 0));
+                mat3x3_0(62 downto 56)  <= unsigned(ui_in(6 downto 0));
+                mat3x3_1(62 downto 56)  <= unsigned(uio_in(6 downto 0));
                 --  rotations           
                 mat3x3_0(55 downto 0) <= mat3x3_0(62 downto 7);
                 mat3x3_1(55 downto 0) <= mat3x3_1(62 downto 7);   
