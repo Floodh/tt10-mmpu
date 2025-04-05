@@ -24,7 +24,7 @@ architecture Behavioral of tt_um_example is
 
 begin
 
-    --uo_out <= std_logic_vector(unsigned(ui_in) + unsigned(uio_in));
+
     uio_out <= "00000000";
     uio_oe  <= "00000000";
 
@@ -49,10 +49,7 @@ begin
                 mat3x3_1(71 downto 8) <= mat3x3_1(63 downto  0);                
 
             else    --  0000 1001,  0000 1010,  0000 1011, 0000 1100
-                --  output                
-                --mat3x3_0(7  downto 0) <= mat3x3_0(71 downto 64);
-                --mat3x3_1(7  downto 0) <= mat3x3_1(71 downto 64);  
-                
+       
                 result :=     std_logic_vector(       
                     mat3x3_0( 7 downto  0) * mat3x3_1( 7 downto   0) +
                     mat3x3_0(15 downto  8) * mat3x3_1(31 downto  24) +
