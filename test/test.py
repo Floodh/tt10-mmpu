@@ -63,26 +63,26 @@ async def test_project(dut):
 
     #   read outputs
     #   row 0
+    await ClockCycles(dut.clk, 2)
+    assert dut.uo_out.value == 23
     await ClockCycles(dut.clk, 1)
-    #assert dut.uo_out.value == 23
+    assert dut.uo_out.value == 13
     await ClockCycles(dut.clk, 1)
-    #assert dut.uo_out.value == 13
-    await ClockCycles(dut.clk, 1)
-    #assert dut.uo_out.value == 14
+    assert dut.uo_out.value == 14
     #   row 1
     await ClockCycles(dut.clk, 1)
-    #assert dut.uo_out.value == 21
+    assert dut.uo_out.value == 21
     await ClockCycles(dut.clk, 1)
-    #assert dut.uo_out.value == 21
+    assert dut.uo_out.value == 21
     await ClockCycles(dut.clk, 1)
-    #assert dut.uo_out.value == 33
+    assert dut.uo_out.value == 33
     #   row 2
     await ClockCycles(dut.clk, 1)
-    #assert dut.uo_out.value == 9
+    assert dut.uo_out.value == 9
     await ClockCycles(dut.clk, 1)
-    #assert dut.uo_out.value == 6
+    assert dut.uo_out.value == 6
     await ClockCycles(dut.clk, 1)
-    #assert dut.uo_out.value == 4
+    assert dut.uo_out.value == 4
     await ClockCycles(dut.clk, 10)
     # The following assersion is just an example of how to check the output values.
     # Change it to match the actual expected output of your module:
